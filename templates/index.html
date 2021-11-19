@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Flask Site</title>
+</head>
+<body>
+    <div>
+        <p>{{ message }}</p>
+
+        <p>{{ contacts }}</p>
+        <p>My Contacts:</p>
+        <ul>
+            {% for contact in contacts %}
+            <li>{{ contact }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
