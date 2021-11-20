@@ -7,12 +7,14 @@ app = Flask(__name__)
 def index():
     message = 'This is a python variable.'
     contacts = ['c1', 'c2', 'c3', 'c4', 'c5']
-    value = 123456
+    x = 123456
+    y = "This was passed through Python, to Jinja2, to HTML, then appended by an external JS script"
 
     context = {
         'message': message,
         'contacts': contacts,
-        'value': 123456
+        'x': x,
+        'y': y
     }
     return render_template("index.html", **context)
 
