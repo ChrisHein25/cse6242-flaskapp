@@ -7,12 +7,14 @@ app = Flask(__name__)
 def index():
     message = 'This is a python variable.'
     contacts = ['c1', 'c2', 'c3', 'c4', 'c5']
+    value = 123456
 
     context = {
         'message': message,
-        'contacts': contacts
+        'contacts': contacts,
+        'value': 123456
     }
-    return render_template("index.html", **context);
+    return render_template("index.html", **context)
 
 
 if __name__ == "__main__":
