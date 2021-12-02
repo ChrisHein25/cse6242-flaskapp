@@ -22,7 +22,7 @@ class Graph:
             edges_CSV = list(edges_CSV)[1:]
             self.edges = [(e[0], e[1]) for e in edges_CSV]
 
-    def add_node(self, id: str, name: str, group: str, avg_min: str) -> None:
+    def add_node(self, id: str, name: str, group: str, avg_min: str, position: str) -> None:
         """
         add a tuple (id, name, group) representing a node to self.nodes if it does not already exist
         The graph should not contain any duplicate nodes
@@ -32,6 +32,7 @@ class Graph:
         id = str(id)
         group = str(group)
         avg_min = str(avg_min)
+        position = str(position)
 
         # check for commas in name and replace
         #name = name.replace(",", "")
@@ -42,7 +43,7 @@ class Graph:
             #print("ID {} already contains a node. Node has been ignored.".format(id))
             return
         else:
-            self.nodes.append((id, name, group, avg_min))
+            self.nodes.append((id, name, group, avg_min, position))
         return
 
     def add_edge(self, source: str, target: str) -> None:
@@ -144,7 +145,7 @@ class Graph:
         print(self.edges)
 
     # Do not modify
-    def write_edges_file(self, path="output_data/edges.csv")->None:
+    def write_edges_file(self, path="edges.csv")->None:
         """
         write all edges out as .csv
         :param path: string
@@ -162,7 +163,7 @@ class Graph:
         print("finished writing edges to csv")
 
     # Do not modify
-    def write_nodes_file(self, path="output_data/nodes.csv")->None:
+    def write_nodes_file(self, path="nodes.csv")->None:
         """
         write all nodes out as .csv
         :param path: string
@@ -171,9 +172,9 @@ class Graph:
         nodes_path = path
         nodes_file = open(nodes_path, 'w', encoding='utf-8')
 
-        nodes_file.write("id,name,group,avg_min" + "\n")
+        nodes_file.write("id,name,group,avg_min,position" + "\n")
         for n in self.nodes:
-            nodes_file.write(str(n[0]) + "," + str(n[1]) + "," + str(n[2]) + "," + str(n[3]) + "\n")
+            nodes_file.write(str(n[0]) + "," + str(n[1]) + "," + str(n[2]) + "," + str(n[3]) + "," + str(n[4]) + "\n")
         nodes_file.close()
         print("finished writing nodes to csv")
 

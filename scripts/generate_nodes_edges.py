@@ -1,4 +1,6 @@
 # import other local scripts
+import random
+
 from scripts.classifier import Classifier
 from scripts.graph import Graph
 # import additional packages
@@ -29,21 +31,28 @@ def cluster_generate_nodes_edges(grouping_factors, game_data_path='./local/full_
         group_3 = df[df['ID'] == row['id3']]['group'].values[0]
         min_3 = df[df['ID'] == row['id3']]['MIN'].values[0]
 
+        # grab other player metadata
+        positions = ["F","C","G","F-C","C-F","F-G","G-F","C-G","G-C"]
+        position = random.choice(positions)
+        position1 = random.choice(positions)
+        position2 = random.choice(positions)
+        position3 = random.choice(positions)
+
         # add nodes
-        graph.add_node(row['ID'], row['PLAYER_NAME'], row['group'], row['MIN'])  # add player himself
-        graph.add_node(row['id1'], name_1, group_1, min_1)  # add player neighbor 1
-        graph.add_node(row['id2'], name_2, group_2, min_2)  # add player neighbor 2
-        graph.add_node(row['id3'], name_3, group_3, min_3)  # add player neighbor 3
+        graph.add_node(row['ID'], row['PLAYER_NAME'], row['group'], row['MIN'], position)  # add player himself
+        graph.add_node(row['id1'], name_1, group_1, min_1, position1)  # add player neighbor 1
+        graph.add_node(row['id2'], name_2, group_2, min_2, position2)  # add player neighbor 2
+        graph.add_node(row['id3'], name_3, group_3, min_3, position3)  # add player neighbor 3
 
         # add edges
         graph.add_edge(row['ID'], row['id1'])
         graph.add_edge(row['ID'], row['id2'])
         graph.add_edge(row['ID'], row['id3'])
 
-    #graph.write_nodes_file("output_data/nodes.csv")
-    #graph.write_edges_file("output_data/edges.csv")
+    graph.write_nodes_file("./scripts/data/nodes.csv")
+    #graph.write_edges_file("./scripts/data/edges.csv")
 
-    print('done')
+    return df, k_opt, inertia, graph.edges, graph.nodes
 
 
 
