@@ -27,7 +27,7 @@ class Classifier:
         self.show_plots = show_plots
         self.prints = prints
 
-    def cluster(self, no_df=False):
+    def cluster(self, no_df=False, pass_full_df=False):
 
         # Step 0: Setup
         os.environ["OMP_NUM_THREADS"] = '4'  # set env to avoid kmeans error on Windows machine
@@ -153,5 +153,8 @@ class Classifier:
         if no_df:
             return k_opt, kmeans.inertia_
         else:
-            return df_final, k_opt, kmeans.inertia_
+            if pass_full_df:
+                return df_final, k_opt, kmeans.inertia_, df
+            else:
+                return df_final, k_opt, kmeans.inertia_
 

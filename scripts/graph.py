@@ -177,45 +177,4 @@ class Graph:
         nodes_file.close()
         print("finished writing nodes to csv")
 
-if __name__ == "__main__":
-
-    csv_path = "../webapp/data/player_clusters_py.csv"
-    df = pd.read_csv(csv_path)
-    df = df.drop_duplicates()  # drop duplicate columns
-    df = df.astype({"ID": int, "group": int, "id1": int, "id2": int, "id3": int})  # recast some columns as needed
-
-    # initialize Graph object
-    graph = Graph()
-
-    # iterate through all players, adding each's 3 nodes and edges
-    for index, row in df.iterrows():
-        player = row['PLAYER_NAME']
-        name_1 = df[df['ID'] == row['id1']]['PLAYER_NAME'].values[0]
-        group_1 = df[df['ID'] == row['id1']]['group'].values[0]
-        min_1 = df[df['ID'] == row['id1']]['MIN'].values[0]
-        name_2 = df[df['ID'] == row['id2']]['PLAYER_NAME'].values[0]
-        group_2 = df[df['ID'] == row['id3']]['group'].values[0]
-        min_2 = df[df['ID'] == row['id2']]['MIN'].values[0]
-        name_3 = df[df['ID'] == row['id3']]['PLAYER_NAME'].values[0]
-        group_3 = df[df['ID'] == row['id3']]['group'].values[0]
-        min_3 = df[df['ID'] == row['id3']]['MIN'].values[0]
-
-        # add nodes
-        graph.add_node(row['ID'], row['PLAYER_NAME'], row['group'], row['MIN'])  # add player himself
-        graph.add_node(row['id1'], name_1, group_1, min_1)  # add player neighbor 1
-        graph.add_node(row['id2'], name_2, group_2, min_2)  # add player neighbor 2
-        graph.add_node(row['id3'], name_3, group_3, min_3)  # add player neighbor 3
-
-        # add edges
-        graph.add_edge(row['ID'], row['id1'])
-        graph.add_edge(row['ID'], row['id2'])
-        graph.add_edge(row['ID'], row['id3'])
-
-        #todo: add player position info grab
-
-    graph.write_nodes_file("output_data/nodes.csv")
-    graph.write_edges_file("output_data/edges.csv")
-
-    print('done')
-
 
