@@ -9,7 +9,7 @@ import pandas as pd
 import math
 import time
 
-def cluster_generate_nodes_edges(grouping_factors, game_data_path='./local/full_game_df.csv'):
+def cluster_generate_nodes_edges(grouping_factors, game_data_path='full_game_df.csv', write_files=False):
 
     # create Classifier and classify data set based on grouping factors
     cl = Classifier(game_data_path, grouping_factors, write_csv=False, prints=False)
@@ -19,7 +19,7 @@ def cluster_generate_nodes_edges(grouping_factors, game_data_path='./local/full_
 
     graph = Graph()  # instantiate Graph object
 
-    path = './scripts/data/player_metadata.csv'
+    path = './static/data/player_metadata.csv'
     df_meta = pd.read_csv(path)
 
     # iterate through all players, adding each's 3 nodes and edges
@@ -97,8 +97,9 @@ def cluster_generate_nodes_edges(grouping_factors, game_data_path='./local/full_
         graph.add_edge(row['ID'], row['id2'])
         graph.add_edge(row['ID'], row['id3'])
 
-    #graph.write_nodes_file("./scripts/data/nodes.csv")
-    #graph.write_edges_file("./scripts/data/edges.csv")
+    if write_files:
+        graph.write_nodes_file("./static/data/nodes.csv")
+        graph.write_edges_file("./static/data/edges.csv")
 
     # return dataframe of nodes and edges
     nodes = pd.DataFrame(graph.nodes, columns=["id", "name", "group", "avg_min", "position", "height", "weight",
