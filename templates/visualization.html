@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Injuries</title>
+  <title>NBA Injury Analytics</title>
   <meta charset="utf-8">
   <script type="text/javascript" src="../static/lib/d3.v5.min.js"></script>
   <script type="text/javascript" src="../static/lib/d3-dsv.min.js"></script>
@@ -31,23 +31,28 @@
 
 
 <div id="container"></div>
-<div id="statSelectionDiv" display="inline-block">
-  <code class="hljs xml"><form method="post" action="/Tests/Post/">
+<div id="statSelectionDiv">
+  <code class="hljs xml"><form onsubmit="confirm('You are about to re-cluster the data set. This can take up to 30 seconds. Do you wish to proceed?')" action = "/" method = "post">
     <fieldset>
         <legend>Box stats considered for clustering</legend>
-        {% for stat in stat_choices %}
-            {% if stat in stat_selection %}
-            <input type="checkbox" name={{stat}} value='True'>{{ stat }}<br>
-            {% else %}
-
-            {% endif %}
-        {% endfor %}
+            {% for stat in stat_choices %}
+                {% if stat in stat_selection %}
+                    <input type="checkbox" name={{stat}} value='True' checked="checked">{{ stat }}
+                {% else %}
+                    <input type="checkbox" name={{stat}} value='True'>{{ stat }}
+                {% endif %}
+            {% endfor %}
         <br>
-        <input type="submit" value="Submit now" />
+        <br>
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+
     </fieldset>
 </form></code>
 </div>
-<div id="parameterSelectButton"></div>
+<div id="clusteringInfo"><p>Clusters discovered: {{ k_opt }} <br> Inertia: {{ '%0.2f' % inertia|float }}</p></div>
+<div id="parameterSelectButton" display="inline-block"><p>Time-series plot axis: </p></div>
 
 
 <script>
@@ -374,9 +379,9 @@ var y = d3.scaleOrdinal()
  //     console.log(links)
 
   var svg = d3.select("body").append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .attr("transform","translate(-350,-75) scale(0.7)");
+    .attr("width", width + 200)
+    .attr("height", height)
+    .attr("transform","translate(-590,-75) scale(0.52)");
 
   // add the links
   var path = svg.append("g")
@@ -941,7 +946,7 @@ function update_graph(selectPlayer, selectParameter)
 				.attr("x", 0)
 				.attr("y", 500)
 				.attr("id", "svg_summary")
-				.attr("transform","translate(500, -1175)")
+				.attr("transform","translate(400, -1175)")
 
 
 	var summary = svg_summary.append("g")
@@ -1142,9 +1147,9 @@ var margin = {top:100, right: 0, bottom: 100, left: 0},
         .attr("id", "svg_body")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .attr('x', 1600)
+        .attr('x', 1400)
         .attr('y', 1000)
-        .attr("transform","translate(1000,-1350) scale(0.8)");
+        .attr("transform","translate(900,-1350) scale(0.8)");
 
         svg_body.append("svg_body:image")
         .attr('x', 0)
