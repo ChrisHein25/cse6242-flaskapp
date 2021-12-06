@@ -22,7 +22,9 @@ class Graph:
             edges_CSV = list(edges_CSV)[1:]
             self.edges = [(e[0], e[1]) for e in edges_CSV]
 
-    def add_node(self, id: str, name: str, group: str, avg_min: str, position: str) -> None:
+    def add_node(self, id: str, name: str, group: str, avg_min: str, position: str, height: str,
+                 weight: str, country: str, seasons_played: str, team_city: str, team_name: str,
+                 start_year: str, end_year: str, draft_round: str, all_star_appearances: str) -> None:
         """
         add a tuple (id, name, group) representing a node to self.nodes if it does not already exist
         The graph should not contain any duplicate nodes
@@ -33,6 +35,16 @@ class Graph:
         group = str(group)
         avg_min = str(avg_min)
         position = str(position)
+        height = str(height)
+        weight = str(weight)
+        country = str(country)
+        seasons_played = str(seasons_played)
+        team_name = str(team_name)
+        team_city = str(team_city)
+        start_year = str(start_year)
+        end_year = str(end_year)
+        draft_round = str(draft_round)
+        all_star_appearances = str(all_star_appearances)
 
         # check for commas in name and replace
         #name = name.replace(",", "")
@@ -43,7 +55,9 @@ class Graph:
             #print("ID {} already contains a node. Node has been ignored.".format(id))
             return
         else:
-            self.nodes.append((id, name, group, avg_min, position))
+            self.nodes.append((id, name, group, avg_min, position, height, weight, country,
+                               seasons_played, team_name, team_city, start_year, end_year,
+                               draft_round, all_star_appearances))
         return
 
     def add_edge(self, source: str, target: str) -> None:
@@ -172,9 +186,23 @@ class Graph:
         nodes_path = path
         nodes_file = open(nodes_path, 'w', encoding='utf-8')
 
-        nodes_file.write("id,name,group,avg_min,position" + "\n")
+        nodes_file.write("id,name,group,avg_min,position,height,weight,country,seasons_played,team_name,team_city,start_year,end_year,draft_round,all_star_appearances" + "\n")
         for n in self.nodes:
-            nodes_file.write(str(n[0]) + "," + str(n[1]) + "," + str(n[2]) + "," + str(n[3]) + "," + str(n[4]) + "\n")
+            nodes_file.write(str(n[0]) + ","
+                             + str(n[1]) + ","
+                             + str(n[2]) + ","
+                             + str(n[3]) + ","
+                             + str(n[4]) + ","
+                             + str(n[5]) + ","
+                             + str(n[6]) + ","
+                             + str(n[7]) + ","
+                             + str(n[8]) + ","
+                             + str(n[9]) + ","
+                             + str(n[10]) + ","
+                             + str(n[11]) + ","
+                             + str(n[12]) + ","
+                             + str(n[13]) + ","
+                             + str(n[14]) + "\n")
         nodes_file.close()
         print("finished writing nodes to csv")
 

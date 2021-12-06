@@ -6,22 +6,16 @@
 </head>
 <body>
     <div id="myDiv">
-        <p>{{ message }}</p>
-
-        <p>{{ contacts }}</p>
-        <p>My Contacts:</p>
-        <ul>
-            {% for contact in contacts %}
-            <li>{{ contact }}</li>
-            {% endfor %}
-        </ul>
+        <p>Any static HTML can go here.</p>
     </div>
 
     <script src="../static/script.js" type="text/javascript"></script>
     <script type="text/javascript">
         runJS({
-            'x': {{ x|safe }},
-            'y': '{{ y|safe }}' // need quotes for strings
+            'k_opt': {{ k_opt|safe }},
+            'inertia': {{ inertia|safe }},
+            'edges': {{ edges|safe }},
+            'nodes': {{ nodes|safe }}
         });
     </script>
 </body>
