@@ -29,8 +29,26 @@
 
 <body>
 
+
 <div id="container"></div>
+<div id="statSelectionDiv" display="inline-block">
+  <code class="hljs xml"><form method="post" action="/Tests/Post/">
+    <fieldset>
+        <legend>Box stats considered for clustering</legend>
+        {% for stat in stat_choices %}
+            {% if stat in stat_selection %}
+            <input type="checkbox" name={{stat}} value='True'>{{ stat }}<br>
+            {% else %}
+
+            {% endif %}
+        {% endfor %}
+        <br>
+        <input type="submit" value="Submit now" />
+    </fieldset>
+</form></code>
+</div>
 <div id="parameterSelectButton"></div>
+
 
 <script>
 
