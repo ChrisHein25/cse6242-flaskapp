@@ -690,6 +690,7 @@ filtered1.style("display","none");
 
 
   node.on('mouseover', function(d) {
+      console.log(d);
 var filtered = path.filter(function(l){
   return (d === l.source || d === l.target);
 })
