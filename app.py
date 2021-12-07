@@ -36,7 +36,7 @@ def index():
             selection.append(key)
 
         full_df_path = "./static/local/full_game_df.csv"
-        df, k_opt, inertia, edges, nodes = cluster_generate_nodes_edges(selection, game_data_path=full_df_path, write_files=True)  # leave game_data_path default
+        df, k_opt, inertia, edges, nodes = cluster_generate_nodes_edges(selection, game_data_path=full_df_path, write_files=False)  # leave game_data_path default
 
         context = {
             'stat_selection': selection,
@@ -52,8 +52,8 @@ def index():
         # rewrite nodes.csv and edges.csv back to stored default files in case they have been altered
         nodes = pd.read_csv('./static/data/nodes_default.csv')
         edges = pd.read_csv('./static/data/edges_default.csv')
-        nodes.to_csv('./static/data/nodes.csv')
-        edges.to_csv('./static/data/edges.csv')
+        #nodes.to_csv('./static/data/nodes.csv')
+        #edges.to_csv('./static/data/edges.csv')
 
 
         context = {
