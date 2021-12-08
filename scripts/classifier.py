@@ -10,11 +10,12 @@ import os
 
 
 class Classifier:
-    def __init__(self, csv_path=None, grouping_factors=None, norm_knn_by_min=True, min_games_played=10, pt_drop_setpoint=10, n_neighbors=3, write_csv=True, show_plots=False, prints=False):
-        if isinstance(csv_path, type(None)) or isinstance(csv_path, type(None)):
-            raise Exception('Please make sure csv_path and grouping_factors are specified.')
+    def __init__(self, full_df=None, csv_path=None, grouping_factors=None, norm_knn_by_min=True, min_games_played=10, pt_drop_setpoint=10, n_neighbors=3, write_csv=True, show_plots=False, prints=False):
+        #if isinstance(csv_path, type(None)) or isinstance(csv_path, type(None)):
+        #    raise Exception('Please make sure csv_path and grouping_factors are specified.')
 
         # required
+        self.full_df = full_df
         self.csv_path = csv_path
         self.grouping_factors = grouping_factors  # list of form ["FGA", "FG3A", "FTA", "REB", "AST", "PTS"]
 
@@ -38,7 +39,13 @@ class Classifier:
 
         # STEP 1: Import and clean full game stats data set
         csv_path = self.csv_path
-        df = pd.read_csv(csv_path)
+        full_df = self.full_df
+        if not isinstance(csv_path, type(None)):
+            df = pd.read_csv(csv_path)
+        elif not isinstance(full_df, type(None)):
+            df = full_df
+        else:
+            raise Exception('No DF or path inputted to cluster()')
         df = df.drop_duplicates()  # drop duplicate columns
         df = df.astype({"PLAYER_ID": int, "TEAM_ID": int, "GAME_ID": int, })  # recast some columns as needed
 

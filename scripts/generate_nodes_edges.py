@@ -9,10 +9,16 @@ import pandas as pd
 import math
 import time
 
-def cluster_generate_nodes_edges(grouping_factors, game_data_path='full_game_df.csv', write_files=False):
+def cluster_generate_nodes_edges(grouping_factors, full_df=None, game_data_path=None, write_files=False):
 
     # create Classifier and classify data set based on grouping factors
-    cl = Classifier(game_data_path, grouping_factors, write_csv=False, prints=False)
+    if not isinstance(game_data_path, type(None)):
+        df = pd.read_csv(game_data_path)
+    elif not isinstance(full_df, type(None)):
+        df = full_df
+    else:
+        raise Exception('No DF or path inputted to cluster_generate_nodes_edges')
+    cl = Classifier(grouping_factors=grouping_factors, full_df=df, write_csv=False, prints=False)
     df, k_opt, inertia, full_df = cl.cluster(pass_full_df=True)
 
     # using outputted df, create nodes and edges Graph

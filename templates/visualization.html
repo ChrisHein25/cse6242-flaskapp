@@ -207,7 +207,7 @@
 
     function refreshPage() {
         console.log('Re-clustering player groups...');
-        confirm('You are about to re-cluster the data set. This can take up to 30 seconds. Do you wish to proceed?');
+        confirm('You are about to re-cluster the data set. This can take a few minutes. Do you wish to proceed?');
         showSpinner(); // show spinner until page reloads
     };
 
@@ -219,7 +219,8 @@
         'load_type': "{{ load_type|safe }}",
         'stat_selection': {{ stat_selection|safe }},
         'nodes': JSON.parse({{ nodes|tojson }}),
-        'edges': JSON.parse({{ edges|tojson }})
+        'edges': JSON.parse({{ edges|tojson }}),
+        'full_game_data': JSON.parse({{ full_game_data|tojson }})
     });
 </script>
 

@@ -4,6 +4,7 @@ function runJS (inputs) {
     stat_selection = inputs["stat_selection"]
     nodes = inputs["nodes"];
     edges = inputs["edges"];
+    full_game_data = inputs["full_game_data"];
 
     console.log('variables loaded')
     //console.log('nodes', nodes)
@@ -127,29 +128,34 @@ function runJS (inputs) {
         console.log('nodes in first loop:', nodes)
         console.log('Injury Data: ', injuryList[0]);
         // import game data
-        d3.dsv(",", "/static/full_game_df.csv", function(d)
+        d3.dsv(",", "/static/data/injury_cluster.csv", function(d)
         { return {
-            name : d["PLAYER_NAME"],
-            date : d["GAME_DATE"],
-            FGA : d["FGA"],
-            FGM : d["FGM"],
-            FG3A : d["FG3A"],
-            FG3M : d["FG3M"],
-            OREB : d["OREB"],
-            DREB : d["DREB"],
-            REB : d["REB"],
-            AST : d["AST"],
-            STL : d["STL"],
-            BLK : d["BLK"],
-            PFD : d["PFD"],
-            PTS : d["PTS"],
-            PTS_2ND_CHANCE : d["PTS_2ND_CHANCE"],
-            PTS_FB : d["PTS_FB"],
-            PTS_PAINT : d["PTS_PAINT"]
+              null: 0
+//            name : d["PLAYER_NAME"],
+//            date : d["GAME_DATE"],
+//            FGA : d["FGA"],
+//            FGM : d["FGM"],
+//            FG3A : d["FG3A"],
+//            FG3M : d["FG3M"],
+//            OREB : d["OREB"],
+//            DREB : d["DREB"],
+//            REB : d["REB"],
+//            AST : d["AST"],
+//            STL : d["STL"],
+//            BLK : d["BLK"],
+//            PFD : d["PFD"],
+//            PTS : d["PTS"],
+//            PTS_2ND_CHANCE : d["PTS_2ND_CHANCE"],
+//            PTS_FB : d["PTS_FB"],
+//            PTS_PAINT : d["PTS_PAINT"]
         }
         }).then(function(gameData)
         {
-            //console.log('Game Data: ', gameData[0]);
+
+            gameData = full_game_data; // replace dummy dsv name with passed jinja variable
+
+            console.log('Orig Game Data: ', gameData[0]);
+            console.log('Pickle Game Data: ', full_game_data[0]);
             //console.log('nodes in 2nd loop:', nodes)
             // import node data
             d3.dsv(",", "/static/data/player_groups.csv", function(d) // filler csv to keep structure - Chris

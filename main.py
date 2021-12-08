@@ -7,7 +7,6 @@ import pandas as pd
 import json
 
 app = Flask(__name__)
-full_df_path = "./static/local/full_game_df.csv"
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -29,6 +28,10 @@ def index():
                     "PTS_2ND_CHANCE",
                     "PTS_FB",  # fast-break points
                     "PTS_PAINT"]
+    full_game_df_orig = pd.read_pickle("./static/full_game_df_reduced.pkl")
+    full_game_df_renamed = full_game_df_orig.rename(columns={"PLAYER_NAME": "name", "GAME_DATE": "date"}) # replace col names
+    full_game_df_renamed["date"] = pd.to_datetime(full_game_df_renamed["date"], format='%m/%d/%y').dt.strftime('%Y-%m-%d')
+    full_game_df_str = full_game_df_renamed.applymap(str)  # convert to str for JS read
 
     # handle request
     if request.method == 'POST':
@@ -40,7 +43,7 @@ def index():
         for key in input.keys():
             selection.append(key)
 
-        df, k_opt, inertia, edges, nodes = cluster_generate_nodes_edges(selection, game_data_path=full_df_path, write_files=False)  # leave game_data_path default
+        df, k_opt, inertia, edges, nodes = cluster_generate_nodes_edges(selection, full_df=full_game_df_orig, write_files=False)  # leave game_data_path default
 
     else:
         # default page load
@@ -61,19 +64,14 @@ def index():
         'k_opt': k_opt,
         'inertia': inertia,
         'nodes': nodes.to_json(orient='records'),
-        'edges': edges.to_json(orient='records')
+        'edges': edges.to_json(orient='records'),
+        'full_game_data': full_game_df_str.to_json(orient='records')
     }
 
     return render_template("visualization.html", **context)
 
 @app.route("/test", methods=['GET', 'POST'])
 def test():
-    # test finding the full_game_df.csv
-    try:
-        test_df = pd.read_csv(full_df_path)
-        success = True
-    except:
-        success = False
 
     return render_template("test.html")
 
