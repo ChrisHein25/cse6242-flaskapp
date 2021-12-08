@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+  <title>NBA Injury Analytics</title>
+  <meta charset="utf-8">
+    <script type="text/javascript" src="../static/lib/d3.v5.min.js"></script>
+    <script type="text/javascript" src="../static/lib/d3-dsv.min.js"></script>
+    <script type="text/javascript" src="../static/loading-spinner.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+
+<script>
+
+// import injury data
+d3.dsv(",", "/static/data/injuries.csv", function(d)
+{ return {
+	date : d["Date"],
+	team : d["Team"],
+	name : d["Relinquished"],
+	notes: d["Notes"],
+	body_injury : d["Body Injury"]
+}
+}).then(function(injuryList) 
+{
+console.log('successfully imported injury data')
+
+//test that file is accessible
+
+console.log('checking if game data file readable...');
+d3.dsv(",", "/static/data/injuries.csv", function(d)
+{
+return {
+	date : d["Date"],
+	team : d["Team"],
+	name : d["Relinquished"],
+	notes: d["Notes"],
+	body_injury : d["Body Injury"]
+}
+}).then(function(gameData) 
+{
+console.log('successfully imported injury data again')
+
+// import node data
+d3.dsv(",", "/static/data/nodes.csv", function(d)
+{ return {
+	player_id_nodes : d["id"],
+	player_name_nodes : d["name"],
+	group_nodes : d["group"],
+	minutes_nodes: d["avg_min"],
+}
+}).then(function(nodesList) 
+{
+console.log('successfully imported node data')
+
+////// FD //////
+Promise.all([
+    d3.csv("/static/data/nodes.csv", function (d) {
+        return {
+            // format data attributes
+            id: parseInt(d["id"]),
+            name: String(d["name"]).trim(),
+            group: parseInt(d["group"]),
+            avg_min: parseFloat(d["avg_min"])
+        }
+
+    }),
+    d3.csv("/static/data/edges.csv", function (d) {
+        return {
+            // format data attributes
+            source: parseInt(d["source"]),
+            target: parseInt(d["target"])
+        }
+    })
+
+]).then(function(data) {
+  console.log('successfully parsed nodes/edges')
+
+
+}).catch(function(error) {
+  console.log(error);
+});
+
+}).catch(function(error) {
+  console.log(error);
+});
+
+}).catch(function(error) {
+  console.log(error);
+});
+
+}).catch(function(error) {
+  console.log(error);
+});
+
+var pelem = document.createElement('p');
+pelem.innerHTML = "SUCCESS";
+document.body.appendChild(pelem);
+
+</script>
+
+
+</body>
