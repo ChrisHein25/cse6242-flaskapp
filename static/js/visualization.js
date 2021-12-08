@@ -125,8 +125,8 @@ function runJS (inputs) {
     }
     }).then(function(injuryList)
     {
-        console.log('nodes in first loop:', nodes)
-        console.log('Injury Data: ', injuryList[0]);
+        //console.log('nodes in first loop:', nodes)
+        //console.log('Injury Data: ', injuryList[0]);
         // import game data
         d3.dsv(",", "/static/data/injury_cluster.csv", function(d)
         { return {
@@ -154,8 +154,8 @@ function runJS (inputs) {
 
             gameData = full_game_data; // replace dummy dsv name with passed jinja variable
 
-            console.log('Orig Game Data: ', gameData[0]);
-            console.log('Pickle Game Data: ', full_game_data[0]);
+            //('Orig Game Data: ', gameData[0]);
+            //console.log('Pickle Game Data: ', full_game_data[0]);
             //console.log('nodes in 2nd loop:', nodes)
             // import node data
             d3.dsv(",", "/static/data/player_groups.csv", function(d) // filler csv to keep structure - Chris
@@ -190,7 +190,7 @@ function runJS (inputs) {
                   nodes = data[0]
                   nodesList = data[0]
                   edges = data[1]
-                  console.log('nodesList', nodesList)
+                  //console.log('nodesList', nodesList)
 
                 var links = edges;
                 var nodes_1=nodes
@@ -496,7 +496,7 @@ function runJS (inputs) {
 
 
                   node.on('mouseover', function(d) {
-                      console.log(d);
+                      //console.log(d);
                 var filtered = path.filter(function(l){
                   return (d === l.source || d === l.target);
                 })
@@ -589,7 +589,7 @@ function runJS (inputs) {
                 var parameterSelect = d3.select("#parameterSelectButton")
                                         .append('select');
 
-                console.log('parameterSelect', parameterSelect)
+                //console.log('parameterSelect', parameterSelect)
 
                 // add the options to the button
                 parameterSelect.selectAll('myOptions')
@@ -642,7 +642,7 @@ function runJS (inputs) {
                                        .sortValues(function(a, b) {return parseFloat(b.avg_min) - parseFloat(a.avg_min)})
                                        .entries(nodesList);
 
-                console.log('node_data_nest', node_data_nest)
+                //console.log('node_data_nest', node_data_nest)
 
                 // return all players in that cluster
                 var list_of_players = []
@@ -1089,7 +1089,7 @@ function runJS (inputs) {
                         }
                     }
 
-                    console.log(list_of_injuries)
+                    //console.log(list_of_injuries)
                     return list_of_injuries
                 }
 
